@@ -1,14 +1,13 @@
 import dotenv  from 'dotenv';
 import express from "express";
+import controller from '@/global/controller/controller';
+import exceptionHandler from '@/global/error/exceptionHandler';
 
 dotenv.config({path: '.env'});
 const app = express();
 
-app.use('/hello', (req, res) => {
-  res.json({
-    hello: 'world'
-  });
-})
+app.use('/', controller);
+app.use(exceptionHandler);
 
 const { PORT } = process.env;
 app.listen(PORT, () => {

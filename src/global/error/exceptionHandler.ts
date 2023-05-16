@@ -1,7 +1,17 @@
 import InternalServerException from '@/global/error/exceptions/internalServerException';
 import NotFoundException from '@/global/error/exceptions/notFoundException';
 import GeneralException from '@/global/error/generalException';
-import express, { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express';
+
+const asyncWrap = (asyncFn: (req: Request, res: Response, next: NextFunction) => void) => {
+  return (async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      return asyncFn(req, res, next);
+    } catch (error) {
+      return next(error);
+    }
+  });
+}
 
 const exceptionHandler = (
   err: GeneralException | Error,
@@ -27,6 +37,7 @@ const pathExceptionHandler = (
 };
 
 export {
+  asyncWrap,
   exceptionHandler,
   pathExceptionHandler
 };

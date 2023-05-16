@@ -1,19 +1,21 @@
+import GenerateService from '@/domain/generate/service/generateService';
 import NotImplementedException from '@/global/error/exceptions/notImplementedException';
 import express from 'express';
-const router = express.Router();
+import asyncify from 'express-asyncify';
+const router = asyncify(express.Router());
 
 router.use(express.json({limit:'1mb'}));
 router.use(express.urlencoded({extended:true,limit:'1mb'}));
 
-router.use('/generate/api', (req, res) => {
+router.get('/generate/api', (req, res) => {
   throw new NotImplementedException();
 });
 
-router.use('/generate/proxy', (req, res) => {
-  throw new NotImplementedException();
+router.get('/generate/proxy', async (req, res) => {
+  await GenerateService.generateByProxy();
 });
 
-router.use('/generate/local', (req, res) => {
+router.get('/generate/local', (req, res) => {
   throw new NotImplementedException();
 });
 

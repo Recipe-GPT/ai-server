@@ -1,4 +1,5 @@
 .env
+/src/.prompt.env.ts
 
 /node_modules
 /dist

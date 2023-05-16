@@ -1,4 +1,4 @@
-import GenerateController from '@/domain/generate/generateController';
+import GenerateController from '@/domain/generate/controller/generateController';
 import express from 'express';
 const router = express.Router();
 

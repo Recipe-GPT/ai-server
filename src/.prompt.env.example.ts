@@ -13,9 +13,12 @@ const OPENAI_MODEL_DEFAULT_PROMPT = [
 }
 ];
 
+const ERROR_CHECK_SIGN = '';
+
 const FOOD_REGEX = /\//;
 
 export {
   OPENAI_MODEL_DEFAULT_PROMPT,
+  ERROR_CHECK_SIGN,
   FOOD_REGEX
 }

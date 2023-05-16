@@ -1,6 +1,5 @@
 import GenerateService from '@/domain/generate/service/generateService';
 import { GenerateReq } from '@/domain/generate/type/generateReq';
-import { GenerateRes } from '@/domain/generate/type/generateRes';
 import NotImplementedException from '@/global/error/exceptions/notImplementedException';
 import express from 'express';
 import asyncify from 'express-asyncify';

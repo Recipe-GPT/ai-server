@@ -6,7 +6,7 @@ import { GenerateRes } from "@/domain/generate/type/generateRes";
 const generateByProxy = async (req: GenerateReq): Promise<GenerateRes[]> => {
   const res = await generate(req);
   const text = res.choices[0].message.content;
-
+  
   return PromptService.parseAiResponse(text);
 };
 

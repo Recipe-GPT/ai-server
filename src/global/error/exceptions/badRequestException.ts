@@ -6,10 +6,13 @@ export interface ErrorField {
 
 class BadRequestException extends GeneralException {
   fileds: ErrorField;
-  constructor(fields: ErrorField) {
+  constructor(
+    message: string = 'Bad Request',
+    fields: ErrorField = {}
+  ) {
     super();
     this.statusCode = 400;
-    this.message = 'Bad Request';
+    this.message = message;
     this.fileds = fields;
   }
 }

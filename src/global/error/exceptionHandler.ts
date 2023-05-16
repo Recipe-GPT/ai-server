@@ -1,13 +1,13 @@
 import InternalServerException from '@/global/error/exceptions/internalServerException';
+import NotFoundException from '@/global/error/exceptions/notFoundException';
 import GeneralException from '@/global/error/generalException';
 import express, { Request, Response, NextFunction } from 'express';
-const router = express.Router();
 
-router.use((
+const exceptionHandler = (
   err: GeneralException | Error,
   req: Request,
   res: Response,
-  next: NextFunction) => {
+  next: NextFunction): void => {
   if (err instanceof GeneralException) {
     if (err.statusCode === 500) {
       console.error(err);
@@ -17,6 +17,16 @@ router.use((
   }
   console.error(err);
   res.status(500).json(new InternalServerException());
-});
+};
 
-export default router;
+const pathExceptionHandler = (
+  req: Request,
+  res: Response,
+  next: NextFunction): void => {
+  res.status(404).json(new NotFoundException());
+};
+
+export {
+  exceptionHandler,
+  pathExceptionHandler
+};

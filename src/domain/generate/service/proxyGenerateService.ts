@@ -4,6 +4,7 @@ import InternalServerException from "@/global/error/exceptions/internalServerExc
 import axios from "axios";
 
 import { OPENAI_MODEL_DEFAULT_PROMPT } from '@/.prompt.env';
+import PromptService from "@/domain/generate/service/promptService";
 
 const {
   OPENAI_REVERSE_PROXY,
@@ -17,13 +18,13 @@ const {
   OPENAI_MODEL_frequency_penalty
 } = process.env;
 
-const generate = async (req?: GenerateReq) => {
+const generate = async (req: GenerateReq) => {
   if (!OPENAI_REVERSE_PROXY || !OPENAI_REVERSE_PROXY_PATH) {
     console.log(OPENAI_REVERSE_PROXY, OPENAI_REVERSE_PROXY_PATH)
     throw new InternalServerException('서버에 문제가 발생하였습니다. 리버스 프록시 설정을 확인해주세요.');
   }
   
-  const payload = getPayload();
+  const payload = getPayload(req);
   const res = await axios.post<string>(
     OPENAI_REVERSE_PROXY + OPENAI_REVERSE_PROXY_PATH,
     payload
@@ -32,15 +33,12 @@ const generate = async (req?: GenerateReq) => {
   console.log(res.data.choices[0].message);
 };
 
-const getPayload = () => {
+const getPayload = (req: GenerateReq) => {
   if (!OPENAI_MODEL_DEFAULT_PROMPT) {
     throw new InternalServerException('서버에 문제가 발생하였습니다. 프롬프트 설정을 확인해주세요.');
   }
 
-  const prompt: Prompt = {
-    role: 'user',
-    content: ''
-  }
+  const prompt: Prompt = PromptService.getUserPrompt(req);
   const prompts: Prompt[] = OPENAI_MODEL_DEFAULT_PROMPT.concat(prompt);
 
   return {

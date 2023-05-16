@@ -1,7 +1,10 @@
 import { generate } from "@/domain/generate/service/proxyGenerateService";
 
 const generateByProxy = async (): Promise<string> => {
-  await generate();
+  await generate({
+    ingredients: [],
+    condiments: []
+  });
   return '';
 };
 

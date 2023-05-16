@@ -5,6 +5,8 @@ import axios from "axios";
 
 import { OPENAI_MODEL_DEFAULT_PROMPT } from '@/.prompt.env';
 import PromptService from "@/domain/generate/service/promptService";
+import { GenerateRes } from "@/domain/generate/type/generateRes";
+import { GenerateRawRes } from "@/domain/generate/type/generateRawRes";
 
 const {
   OPENAI_REVERSE_PROXY,
@@ -18,19 +20,18 @@ const {
   OPENAI_MODEL_frequency_penalty
 } = process.env;
 
-const generate = async (req: GenerateReq) => {
+const generate = async (req: GenerateReq): Promise<GenerateRawRes> => {
   if (!OPENAI_REVERSE_PROXY || !OPENAI_REVERSE_PROXY_PATH) {
     console.log(OPENAI_REVERSE_PROXY, OPENAI_REVERSE_PROXY_PATH)
     throw new InternalServerException('서버에 문제가 발생하였습니다. 리버스 프록시 설정을 확인해주세요.');
   }
   
   const payload = getPayload(req);
-  const res = await axios.post<string>(
+  const res = await axios.post<GenerateRawRes>(
     OPENAI_REVERSE_PROXY + OPENAI_REVERSE_PROXY_PATH,
     payload
   );
-  // @ts-ignore
-  console.log(res.data.choices[0].message);
+  return res.data;
 };
 
 const getPayload = (req: GenerateReq) => {

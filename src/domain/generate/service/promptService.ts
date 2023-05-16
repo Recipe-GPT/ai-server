@@ -2,6 +2,8 @@ import { GenerateReq } from "@/domain/generate/type/generateReq";
 import { Prompt } from "@/domain/generate/type/prompt";
 import { Ingredients } from "@/domain/generate/type/ingredient";
 import { Condiments } from "@/domain/generate/type/condiments";
+import { FOOD_REGEX } from "@/.prompt.env";
+import { GenerateRes } from "@/domain/generate/type/generateRes";
 
 const getUserPrompt = (req: GenerateReq) => {
   const prompt: Prompt = {
@@ -13,13 +15,33 @@ const getUserPrompt = (req: GenerateReq) => {
 };
 
 const getIngredientsPrompt = (ingredients: Ingredients): string => 
-  `재료("${ingredients.join('" + "')}")`;
+  `재료('${ingredients.join("' + '")}')`;
 
 const getCondimentsPrompt = (condiments: Condiments): string => 
-  `조미료, 소스("${condiments.join('" + "')}")`;
+  `조미료, 소스('${condiments.join("' + '")}')`;
+
+const parseAiResponse = (text: string): GenerateRes[] => {
+  // AI의 답변 구조가 약간 다를 수 있기 때문에 답변을 보정해줌.
+  text += '\n';
+
+  let match: RegExpExecArray | null = null;
+  const resList: GenerateRes[] = [];
+
+  while ((match = FOOD_REGEX.exec(text)) !== null) {
+    const res: GenerateRes = {
+      name: match[1],
+      description: match[2],
+      ingredients: match[3].slice(1, -1).split("', '"),
+      condiments: match[4].slice(1, -1).split("', '")
+    }
+    resList.push(res);
+  }
+  return resList;
+}
 
 const PromptService = {
-  getUserPrompt
+  getUserPrompt,
+  parseAiResponse
 }
 
 export default PromptService;

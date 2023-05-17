@@ -5,7 +5,6 @@ import axios from "axios";
 
 import { OPENAI_MODEL_DEFAULT_PROMPT } from '@/.prompt.env';
 import PromptService from "@/domain/generate/service/promptService";
-import { GenerateRes } from "@/domain/generate/type/generateRes";
 import { GenerateRawRes } from "@/domain/generate/type/generateRawRes";
 
 const {

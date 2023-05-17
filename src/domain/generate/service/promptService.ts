@@ -1,7 +1,7 @@
 import { GenerateReq } from "@/domain/generate/type/generateReq";
 import { Prompt } from "@/domain/generate/type/prompt";
 import { Ingredients } from "@/domain/generate/type/ingredient";
-import { Condiments } from "@/domain/generate/type/condiments";
+import { Seasonings } from "@/domain/generate/type/seasoning";
 import { ERROR_CHECK_SIGN, FOOD_REGEX } from "@/.prompt.env";
 import { GenerateRes } from "@/domain/generate/type/generateRes";
 import ConflictException from "@/global/error/exceptions/conflictException";
@@ -9,7 +9,7 @@ import ConflictException from "@/global/error/exceptions/conflictException";
 const getUserPrompt = (req: GenerateReq) => {
   const prompt: Prompt = {
     role: 'user',
-    content: `${getIngredientsPrompt(req.ingredients)}\n${getCondimentsPrompt(req.condiments)}`
+    content: `${getIngredientsPrompt(req.ingredients)}\n${getSeasoningsPrompt(req.seasonings)}`
   };
 
   return prompt;
@@ -18,8 +18,8 @@ const getUserPrompt = (req: GenerateReq) => {
 const getIngredientsPrompt = (ingredients: Ingredients): string => 
   `재료('${ingredients.join("' + '")}')`;
 
-const getCondimentsPrompt = (condiments: Condiments): string => 
-  `조미료, 소스('${condiments.join("' + '")}')`;
+const getSeasoningsPrompt = (seasonings: Seasonings): string => 
+  `조미료, 소스('${seasonings.join("' + '")}')`;
 
 const parseAiResponse = (text: string): GenerateRes[] => {
   if (isError(text)) {
@@ -38,7 +38,7 @@ const parseAiResponse = (text: string): GenerateRes[] => {
       name: match[1],
       description: match[2],
       ingredients: match[3].slice(1, -1).split("', '"),
-      condiments: match[4].slice(1, -1).split("', '")
+      seasonings: match[4].slice(1, -1).split("', '")
     }
     resList.push(res);
   }

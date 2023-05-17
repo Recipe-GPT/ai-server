@@ -10,17 +10,18 @@ const doc = {
     description: 'Recipe GPT AI Server API Docs',
   },
   host: '',
-  schemes: ['http'],
+  consumes: ['application/json'],
+  produces: ['application/json'],
   definitions: {
     GenerateReq: {
       $ingredients: [''],
-      $condiments: ['']
+      $seasonings: ['']
     },
     GenerateRes: {
       name: 'string',
       description: 'string',
       ingredients: ['string'],
-      condiments: ['string']
+      seasonings: ['string']
     },
     GenerateBadRequestRes: {
       statusCode: 400,

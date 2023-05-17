@@ -39,8 +39,8 @@ router.post('/generate/proxy', async (req, res) => {
     description: "사용자의 요청을 토대로 AI가 요리 추천을 하는데 문제가 발생함" } */
     
   const payload: GenerateReq = {
-    ingredients: JSON.parse(req.body.ingredients),
-    condiments: JSON.parse(req.body.condiments)
+    ingredients: req.body.ingredients,
+    seasonings: req.body.seasonings
   };
   res.json(
     await GenerateService.generateByProxy(payload)

@@ -1,7 +1,7 @@
-import { Condiments } from "@/domain/generate/type/condiments";
+import { Seasonings } from "@/domain/generate/type/seasoning";
 import { Ingredients } from "@/domain/generate/type/ingredient";
 
 export interface GenerateReq {
   ingredients: Ingredients,
-  condiments: Condiments
+  seasonings: Seasonings
 }

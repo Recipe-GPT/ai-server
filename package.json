@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node dist/main.js",
     "build": "tsc && babel dist -d dist",
-    "prestart": "npm run build"
+    "swagger": "node dist/swagger/swagger.js",
+    "prestart": "npm run build && npm run swagger"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,12 @@
     "babel-plugin-module-resolver": "^5.0.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "express-asyncify": "^1.1.0"
+    "express-asyncify": "^1.1.0",
+    "swagger-autogen": "^2.23.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3"
+  },
+  "devDependencies": {
+    "@types/swagger-ui-express": "^4.1.3"
   }
 }

@@ -1,11 +1,11 @@
-import { GenerateReq } from "@/domain/generate/type/generateReq";
-import { Prompt } from "@/domain/generate/type/prompt";
+import { RecommendReq } from "@/domain/recommend/type/recommendReq";
+import { Prompt } from "@/domain/food/type/prompt";
 import InternalServerException from "@/global/error/exceptions/internalServerException";
 import axios from "axios";
 
-import { OPENAI_MODEL_DEFAULT_PROMPT } from '@/.prompt.env';
-import PromptService from "@/domain/generate/service/promptService";
-import { GenerateRawRes } from "@/domain/generate/type/generateRawRes";
+import { FOOD_RECOMMEND_PROMPT } from '@/.prompt.env';
+import PromptService from "@/domain/recommend/service/promptService";
+import { RecommendRawRes } from "@/domain/recommend/type/recommendRawRes";
 
 const {
   OPENAI_REVERSE_PROXY,
@@ -20,7 +20,7 @@ const {
   OPENAI_MODEL_frequency_penalty
 } = process.env;
 
-const generate = async (req: GenerateReq): Promise<GenerateRawRes> => {
+const recommend = async (req: RecommendReq): Promise<RecommendRawRes> => {
   if (!OPENAI_REVERSE_PROXY || !OPENAI_REVERSE_PROXY_PATH) {
     console.log(OPENAI_REVERSE_PROXY, OPENAI_REVERSE_PROXY_PATH)
     throw new InternalServerException('서버에 문제가 발생하였습니다. 리버스 프록시 설정을 확인해주세요.');
@@ -31,7 +31,7 @@ const generate = async (req: GenerateReq): Promise<GenerateRawRes> => {
     headers: getHeaderPayload()
   };
   
-  const res = await axios.post<GenerateRawRes>(
+  const res = await axios.post<RecommendRawRes>(
     OPENAI_REVERSE_PROXY + OPENAI_REVERSE_PROXY_PATH,
     payload,
     config
@@ -39,13 +39,13 @@ const generate = async (req: GenerateReq): Promise<GenerateRawRes> => {
   return res.data;
 };
   
-  const getPayload = (req: GenerateReq) => {
-  if (!OPENAI_MODEL_DEFAULT_PROMPT) {
+  const getPayload = (req: RecommendReq) => {
+  if (!FOOD_RECOMMEND_PROMPT) {
     throw new InternalServerException('서버에 문제가 발생하였습니다. 프롬프트 설정을 확인해주세요.');
   }
   
   const prompt: Prompt = PromptService.getUserPrompt(req);
-  const prompts: Prompt[] = OPENAI_MODEL_DEFAULT_PROMPT.concat(prompt);
+  const prompts: Prompt[] = FOOD_RECOMMEND_PROMPT.concat(prompt);
   
   return {
     model: OPENAI_MODEL_TYPE,
@@ -71,5 +71,5 @@ const getHeaderPayload = () => {
 }
 
 export {
-  generate
+  recommend
 };

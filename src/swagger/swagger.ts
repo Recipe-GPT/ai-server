@@ -20,24 +20,24 @@ const doc = {
     }
   },
   definitions: {
-    GenerateReq: {
+    RecommendReq: {
       $ingredients: [''],
       $seasonings: ['']
     },
-    GenerateRes: {
+    RecommendRes: {
       name: 'string',
       description: 'string',
       ingredients: ['string'],
       seasonings: ['string']
     },
-    GenerateBadRequestRes: {
+    RecommendBadRequestRes: {
       statusCode: 400,
       message: 'string',
       fields: {
         ingredients: '재료는 3개 이상이여야 합니다'
       }
     },
-    GenerateConflictRes: {
+    RecommendConflictRes: {
       statusCode: 409,
       message: '재료 목록에는 음식 재료만 포함되어야 합니다. 컴퓨터, 마우스, 모니터는 요리에 사용되지 않는 물품입니다.'
     },
@@ -54,7 +54,7 @@ const doc = {
 
 const outputFile = './dist/swagger/swagger-output.json';
 const endpointsFiles = [
-  './dist/domain/generate/controller/generateController.js'
+  './dist/domain/recommend/controller/recommendController.js'
 ];
 
 swaggerAutogenInstance(outputFile, endpointsFiles, doc);

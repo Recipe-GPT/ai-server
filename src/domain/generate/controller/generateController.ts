@@ -29,15 +29,15 @@ router.post('/generate/proxy', async (req, res) => {
       schema: { $ref: "#/definitions/GenerateReq" }
   } */
   /* #swagger.responses[200] = {
-    schema: { "$ref": "#/definitions/GenerateRes" },
-    description: "성공" } */
+      schema: { "$ref": "#/definitions/GenerateRes" },
+      description: "성공" } */
   /* #swagger.responses[400] = {
-    schema: { "$ref": "#/definitions/GenerateBadRequestRes" },
-    description: "요청이 양식에 맞지않음" } */
+      schema: { "$ref": "#/definitions/GenerateBadRequestRes" },
+      description: "요청이 양식에 맞지않음" } */
   /* #swagger.responses[409] = {
-    schema: { "$ref": "#/definitions/GenerateConflictRes" },
-    description: "사용자의 요청을 토대로 AI가 요리 추천을 하는데 문제가 발생함" } */
-    
+      schema: { "$ref": "#/definitions/GenerateConflictRes" },
+      description: "사용자의 요청을 토대로 AI가 요리 추천을 하는데 문제가 발생함" } */
+  
   const payload: GenerateReq = {
     ingredients: req.body.ingredients,
     seasonings: req.body.seasonings

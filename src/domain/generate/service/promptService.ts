@@ -19,7 +19,7 @@ const getIngredientsPrompt = (ingredients: Ingredients): string =>
   `재료('${ingredients.join("' + '")}')`;
 
 const getSeasoningsPrompt = (seasonings: Seasonings): string => 
-  `조미료, 소스('${seasonings.join("' + '")}')`;
+  `양념('${seasonings.join("' + '")}')`;
 
 const parseAiResponse = (text: string): GenerateRes[] => {
   if (isError(text)) {

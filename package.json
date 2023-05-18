@@ -6,9 +6,9 @@
   "type": "commonjs",
   "scripts": {
     "start": "node dist/main.js",
-    "build": "tsc && babel dist -d dist",
+    "build": "tsc && babel dist -d dist && npm run swagger",
     "swagger": "node dist/swagger/swagger.js",
-    "prestart": "npm run build && npm run swagger"
+    "prestart": "npm run build"
   },
   "repository": {
     "type": "git",

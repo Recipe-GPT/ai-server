@@ -41,7 +41,11 @@ const doc = {
       statusCode: 409,
       message: '재료 목록에는 음식 재료만 포함되어야 합니다. 컴퓨터, 마우스, 모니터는 요리에 사용되지 않는 물품입니다.'
     },
-    GenerateNotImplementedRes: {
+    UnAuthorizedRes: {
+      statusCode: 401,
+      message: 'UnAuthorized'
+    },
+    NotImplementedRes: {
       statusCode: 501,
       message: 'Not Implemented'
     },

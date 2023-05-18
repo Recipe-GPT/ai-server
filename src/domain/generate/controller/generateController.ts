@@ -15,8 +15,11 @@ router.post('/generate/api', (req, res) => {
   /*  #swagger.security = [{
       "apiKeyAuth": []
   }] */
+  /* #swagger.responses[401] = {
+      schema: { "$ref": "#/definitions/UnAuthorizedRes" },
+      description: "인증 안됨" } */
   /* #swagger.responses[501] = {
-      schema: { "$ref": "#/definitions/GenerateNotImplementedRes" },
+      schema: { "$ref": "#/definitions/NotImplementedRes" },
       description: "아직 구현안됨" } */
   throw new NotImplementedException();
 });
@@ -39,6 +42,9 @@ router.post('/generate/proxy', async (req, res) => {
   /* #swagger.responses[400] = {
       schema: { "$ref": "#/definitions/GenerateBadRequestRes" },
       description: "요청이 양식에 맞지않음" } */
+  /* #swagger.responses[401] = {
+      schema: { "$ref": "#/definitions/UnAuthorizedRes" },
+      description: "인증 안됨" } */
   /* #swagger.responses[409] = {
       schema: { "$ref": "#/definitions/GenerateConflictRes" },
       description: "사용자의 요청을 토대로 AI가 요리 추천을 하는데 문제가 발생함" } */
@@ -59,8 +65,11 @@ router.post('/generate/local', (req, res) => {
   /*  #swagger.security = [{
       "apiKeyAuth": []
   }] */
+  /* #swagger.responses[401] = {
+      schema: { "$ref": "#/definitions/UnAuthorizedRes" },
+      description: "인증 안됨" } */
   /* #swagger.responses[501] = {
-      schema: { "$ref": "#/definitions/GenerateNotImplementedRes" },
+      schema: { "$ref": "#/definitions/NotImplementedRes" },
       description: "아직 구현안됨" } */
   throw new NotImplementedException();
 });

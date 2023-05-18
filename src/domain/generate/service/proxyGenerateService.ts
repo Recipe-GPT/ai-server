@@ -9,7 +9,8 @@ import { GenerateRawRes } from "@/domain/generate/type/generateRawRes";
 
 const {
   OPENAI_REVERSE_PROXY,
-  OPENAI_REVERSE_PROXY_PATH
+  OPENAI_REVERSE_PROXY_PATH,
+  OPENAI_REVERSE_PROXY_PASSWORD
 } = process.env;
 const {
   OPENAI_MODEL_TYPE,
@@ -26,21 +27,26 @@ const generate = async (req: GenerateReq): Promise<GenerateRawRes> => {
   }
   
   const payload = getPayload(req);
+  const config = {
+    headers: getHeaderPayload()
+  };
+  
   const res = await axios.post<GenerateRawRes>(
     OPENAI_REVERSE_PROXY + OPENAI_REVERSE_PROXY_PATH,
-    payload
+    payload,
+    config
   );
   return res.data;
 };
-
-const getPayload = (req: GenerateReq) => {
+  
+  const getPayload = (req: GenerateReq) => {
   if (!OPENAI_MODEL_DEFAULT_PROMPT) {
     throw new InternalServerException('서버에 문제가 발생하였습니다. 프롬프트 설정을 확인해주세요.');
   }
-
+  
   const prompt: Prompt = PromptService.getUserPrompt(req);
   const prompts: Prompt[] = OPENAI_MODEL_DEFAULT_PROMPT.concat(prompt);
-
+  
   return {
     model: OPENAI_MODEL_TYPE,
     messages: prompts,
@@ -51,6 +57,18 @@ const getPayload = (req: GenerateReq) => {
     logit_bias: {}
   }
 };
+
+const getHeaderPayload = () => {
+  const headers: {
+    [key: string]: any
+  } = {};
+  
+  if (OPENAI_REVERSE_PROXY_PASSWORD) {
+    headers.Authorization = OPENAI_REVERSE_PROXY_PASSWORD;
+  }
+
+  return headers;
+}
 
 export {
   generate

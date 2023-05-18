@@ -12,6 +12,13 @@ const doc = {
   host: '',
   consumes: ['application/json'],
   produces: ['application/json'],
+  securityDefinitions: {
+    apiKeyAuth: {
+      type: 'apiKey',
+      in: 'header',
+      name: 'x-api-key'
+    }
+  },
   definitions: {
     GenerateReq: {
       $ingredients: [''],

@@ -32,7 +32,7 @@ const doc = {
     },
     RecommendBadRequestRes: {
       statusCode: 400,
-      message: 'string',
+      message: 'Bad Request',
       fields: {
         ingredients: '재료는 3개 이상이여야 합니다'
       }
@@ -44,6 +44,10 @@ const doc = {
     UnAuthorizedRes: {
       statusCode: 401,
       message: 'UnAuthorized'
+    },
+    InternalServerErrorRes: {
+      statusCode: 500,
+      message: 'Internal Server Error'
     },
     NotImplementedRes: {
       statusCode: 501,

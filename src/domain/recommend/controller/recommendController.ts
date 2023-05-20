@@ -29,6 +29,9 @@ router.post('/recommend/mock', (req, res) => {
   /* #swagger.responses[401] = {
       schema: { "$ref": "#/definitions/UnAuthorizedRes" },
       description: "인증 안됨" } */
+  /* #swagger.responses[500] = {
+      schema: { "$ref": "#/definitions/InternalServerErrorRes" },
+      description: "내부 서버 문제" } */
   
   res.json(
     RecommendService.recommendByMockData()
@@ -45,6 +48,9 @@ router.post('/recommend/api', (req, res) => {
   /* #swagger.responses[401] = {
       schema: { "$ref": "#/definitions/UnAuthorizedRes" },
       description: "인증 안됨" } */
+  /* #swagger.responses[500] = {
+      schema: { "$ref": "#/definitions/InternalServerErrorRes" },
+      description: "내부 서버 문제" } */
   /* #swagger.responses[501] = {
       schema: { "$ref": "#/definitions/NotImplementedRes" },
       description: "아직 구현안됨" } */
@@ -75,6 +81,9 @@ router.post('/recommend/proxy', async (req, res) => {
   /* #swagger.responses[409] = {
       schema: { "$ref": "#/definitions/RecommendConflictRes" },
       description: "사용자의 요청을 토대로 AI가 요리 추천을 하는데 문제가 발생함" } */
+  /* #swagger.responses[500] = {
+      schema: { "$ref": "#/definitions/InternalServerErrorRes" },
+      description: "내부 서버 문제" } */
   
   const payload: RecommendReq = {
     ingredients: req.body.ingredients,
@@ -95,6 +104,9 @@ router.post('/recommend/local', (req, res) => {
   /* #swagger.responses[401] = {
       schema: { "$ref": "#/definitions/UnAuthorizedRes" },
       description: "인증 안됨" } */
+  /* #swagger.responses[500] = {
+      schema: { "$ref": "#/definitions/InternalServerErrorRes" },
+      description: "내부 서버 문제" } */
   /* #swagger.responses[501] = {
       schema: { "$ref": "#/definitions/NotImplementedRes" },
       description: "아직 구현안됨" } */

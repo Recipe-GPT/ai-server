@@ -1,28 +1,21 @@
 import { RecommendReq } from "@/domain/recommend/type/recommendReq";
 import { Prompt } from "@/domain/food/type/prompt";
-import { Ingredients } from "@/domain/food/type/ingredient";
-import { Seasonings } from "@/domain/food/type/seasoning";
-import { ERROR_CHECK_SIGN, FOOD_REGEX, ITEM_DELIMITER, ITEM_DELIMITER_PREFIX, ITEM_DELIMITER_SUFFIX } from "@/.prompt.env";
+import { ERROR_CHECK_SIGN, FOOD_REGEX, ITEM_DELIMITER, ITEM_DELIMITER_PREFIX, ITEM_DELIMITER_SUFFIX, SEASONINGS } from "@/.prompt.env";
 import { RecommendRes } from "@/domain/recommend/type/recommendRes";
 import ConflictException from "@/global/error/exceptions/conflictException";
+import PromptService from "@/domain/food/service/promptService";
 
 const getUserPrompt = (req: RecommendReq) => {
   const prompt: Prompt = {
     role: 'user',
-    content: `${getIngredientsPrompt(req.ingredients)}\n${getSeasoningsPrompt(req.seasonings)}`
+    content: `${PromptService.getIngredientsPrompt(req.ingredients)}\n${PromptService.getSeasoningsPrompt(req.seasonings)}`
   };
 
   return prompt;
 };
 
-const getIngredientsPrompt = (ingredients: Ingredients): string => 
-  `재료(${ITEM_DELIMITER_PREFIX}${ingredients.join(ITEM_DELIMITER)}${ITEM_DELIMITER_SUFFIX})`;
-
-const getSeasoningsPrompt = (seasonings: Seasonings): string => 
-  `양념(${ITEM_DELIMITER_PREFIX}${seasonings.join(ITEM_DELIMITER)}${ITEM_DELIMITER_SUFFIX})`;
-
 const parseAiResponse = (text: string): RecommendRes[] => {
-  if (isError(text)) {
+  if (PromptService.isError(text)) {
     const errorMessage = text.split(ERROR_CHECK_SIGN)[1].trim();
     throw new ConflictException(errorMessage);
   }
@@ -47,13 +40,9 @@ const parseAiResponse = (text: string): RecommendRes[] => {
   return resList;
 }
 
-const isError = (text: string): boolean => {
-  return text.includes(ERROR_CHECK_SIGN);
-}
-
-const PromptService = {
+const RecommendPromptService = {
   getUserPrompt,
   parseAiResponse
 }
 
-export default PromptService;
+export default RecommendPromptService;

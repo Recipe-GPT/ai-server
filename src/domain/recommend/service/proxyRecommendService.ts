@@ -4,7 +4,7 @@ import InternalServerException from "@/global/error/exceptions/internalServerExc
 import axios from "axios";
 
 import { FOOD_RECOMMEND_PROMPT } from '@/.prompt.env';
-import PromptService from "@/domain/recommend/service/promptService";
+import RecommendPromptService from "@/domain/recommend/service/recommendPromptService";
 import { RecommendRawRes } from "@/domain/recommend/type/recommendRawRes";
 
 const {
@@ -44,7 +44,7 @@ const recommend = async (req: RecommendReq): Promise<RecommendRawRes> => {
     throw new InternalServerException('서버에 문제가 발생하였습니다. 프롬프트 설정을 확인해주세요.');
   }
   
-  const prompt: Prompt = PromptService.getUserPrompt(req);
+  const prompt: Prompt = RecommendPromptService.getUserPrompt(req);
   const prompts: Prompt[] = FOOD_RECOMMEND_PROMPT.concat(prompt);
   
   return {

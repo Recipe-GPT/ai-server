@@ -5,6 +5,36 @@ import express from 'express';
 import asyncify from 'express-asyncify';
 const router = asyncify(express.Router());
 
+router.post('/recipe/mock', (req, res) => {
+  /*  #swagger.tags = ['Recipe']
+      #swagger.summary = '레시피 생성 목업 데이터 API'
+      #swagger.description = '실제 AI가 생성하지 않고 미리 만들어둔 데이터만 반환합니다. 응답 속도가 빠르고 AI 사용료가 나오지 않으니 왠만하면 이 API로 개발해주세요.' */
+  /*  #swagger.security = [{
+      "apiKeyAuth": []
+  }] */
+  /* #swagger.requestBody = {
+      description: '요리 이름, 설명, 식재료, 양념 정보',
+      required: true,
+      schema: { $ref: "#/definitions/RecipeReq" }
+  } */
+  /* #swagger.responses[200] = {
+      schema: { "$ref": "#/definitions/RecipeRes" },
+      description: "성공" } */
+  /* #swagger.responses[400] = {
+      schema: { "$ref": "#/definitions/RecipeBadRequestRes" },
+      description: "요청이 양식에 맞지않음" } */
+  /* #swagger.responses[401] = {
+      schema: { "$ref": "#/definitions/UnAuthorizedRes" },
+      description: "인증 안됨" } */
+  /* #swagger.responses[500] = {
+      schema: { "$ref": "#/definitions/InternalServerErrorRes" },
+      description: "내부 서버 문제" } */
+  
+  res.json(
+    RecipeService.generateRecipeByMockData()
+  );
+});
+
 router.post('/recipe/api', (req, res) => {
   /*  #swagger.tags = ['Recipe']
       #swagger.summary = 'API를 통해 레시피 생성'

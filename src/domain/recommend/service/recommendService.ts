@@ -1,4 +1,4 @@
-import { FOOD_RECOMMEND_MOCK_RESPONSE } from "@/.prompt.env";
+import { RECOMMEND_MOCK_RESPONSE } from "@/.prompt.env";
 import { RecommendPromptService } from "@/domain/recommend/service/recommendPromptService";
 import { ProxyRecommendService } from "@/domain/recommend/service/proxyRecommendService";
 import { RecommendReq } from "@/domain/recommend/type/recommendReq";
@@ -13,13 +13,11 @@ const recommendByProxy = async (req: RecommendReq): Promise<RecommendRes[]> => {
 };
 
 const recommendByMockData = (): RecommendRes[] => {
-  const text = FOOD_RECOMMEND_MOCK_RESPONSE;
+  const text = RECOMMEND_MOCK_RESPONSE;
   return RecommendPromptService.parseAiResponse(text);
 };
 
-const RecommendService = {
+export const RecommendService = {
   recommendByProxy,
   recommendByMockData
 };
-
-export default RecommendService;

@@ -1,4 +1,4 @@
-import { FOOD_RECIPE_PROMPT } from "@/.prompt.env";
+import { RECIPE_PROMPT } from "@/.prompt.env";
 import { OpenAiModelRawRes } from "@/domain/food/type/openAiModelRawRes";
 import { Prompt } from "@/domain/food/type/prompt";
 import { RecipePromptService } from "@/domain/recipe/service/recipePromptService";
@@ -39,12 +39,12 @@ const generateRecipe = async (req: RecipeReq): Promise<OpenAiModelRawRes> => {
 };
   
 const getPayload = (req: RecipeReq) => {
-  if (!FOOD_RECIPE_PROMPT) {
+  if (!RECIPE_PROMPT) {
     throw new InternalServerException('서버에 문제가 발생하였습니다. 프롬프트 설정을 확인해주세요.');
   }
   
   const prompt: Prompt = RecipePromptService.getUserPrompt(req);
-  const prompts: Prompt[] = FOOD_RECIPE_PROMPT.concat(prompt);
+  const prompts: Prompt[] = RECIPE_PROMPT.concat(prompt);
   
   return {
     model: OPENAI_MODEL_TYPE,

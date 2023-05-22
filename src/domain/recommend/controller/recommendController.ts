@@ -1,4 +1,4 @@
-import RecommendService from '@/domain/recommend/service/recommendService';
+import { RecommendService } from '@/domain/recommend/service/recommendService';
 import { RecommendReq } from '@/domain/recommend/type/recommendReq';
 import NotImplementedException from '@/global/error/exceptions/notImplementedException';
 import express from 'express';

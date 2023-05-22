@@ -1,7 +1,7 @@
 import { RecommendReq } from "@/domain/recommend/type/recommendReq";
 import { Prompt } from "@/domain/food/type/prompt";
 import InternalServerException from "@/global/error/exceptions/internalServerException";
-import { FOOD_RECOMMEND_PROMPT } from '@/.prompt.env';
+import { RECOMMEND_PROMPT } from '@/.prompt.env';
 import { RecommendPromptService } from "@/domain/recommend/service/recommendPromptService";
 import { OpenAiModelRawRes } from "@/domain/food/type/openAiModelRawRes";
 import axios from "axios";
@@ -39,12 +39,12 @@ const recommend = async (req: RecommendReq): Promise<OpenAiModelRawRes> => {
 };
   
 const getPayload = (req: RecommendReq) => {
-  if (!FOOD_RECOMMEND_PROMPT) {
+  if (!RECOMMEND_PROMPT) {
     throw new InternalServerException('서버에 문제가 발생하였습니다. 프롬프트 설정을 확인해주세요.');
   }
   
   const prompt: Prompt = RecommendPromptService.getUserPrompt(req);
-  const prompts: Prompt[] = FOOD_RECOMMEND_PROMPT.concat(prompt);
+  const prompts: Prompt[] = RECOMMEND_PROMPT.concat(prompt);
   
   return {
     model: OPENAI_MODEL_TYPE,

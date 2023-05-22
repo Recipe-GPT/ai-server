@@ -3,12 +3,13 @@ import { Prompt } from "@/domain/food/type/prompt";
 import { ERROR_CHECK_SIGN, FOOD_REGEX, ITEM_DELIMITER, ITEM_DELIMITER_PREFIX, ITEM_DELIMITER_SUFFIX, SEASONINGS } from "@/.prompt.env";
 import { RecommendRes } from "@/domain/recommend/type/recommendRes";
 import ConflictException from "@/global/error/exceptions/conflictException";
-import PromptService from "@/domain/food/service/promptService";
+import { PromptService } from "@/domain/food/service/promptService";
 
 const getUserPrompt = (req: RecommendReq) => {
   const prompt: Prompt = {
     role: 'user',
-    content: `${PromptService.getIngredientsPrompt(req.ingredients)}\n${PromptService.getSeasoningsPrompt(req.seasonings)}`
+    content: `${PromptService.getIngredientsPrompt(req.ingredients)}
+${PromptService.getSeasoningsPrompt(req.seasonings)}`
   };
 
   return prompt;
@@ -40,9 +41,7 @@ const parseAiResponse = (text: string): RecommendRes[] => {
   return resList;
 }
 
-const RecommendPromptService = {
+export const RecommendPromptService = {
   getUserPrompt,
   parseAiResponse
-}
-
-export default RecommendPromptService;
+};

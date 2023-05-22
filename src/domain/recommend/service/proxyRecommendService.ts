@@ -1,11 +1,10 @@
 import { RecommendReq } from "@/domain/recommend/type/recommendReq";
 import { Prompt } from "@/domain/food/type/prompt";
 import InternalServerException from "@/global/error/exceptions/internalServerException";
-import axios from "axios";
-
 import { FOOD_RECOMMEND_PROMPT } from '@/.prompt.env';
-import RecommendPromptService from "@/domain/recommend/service/recommendPromptService";
+import { RecommendPromptService } from "@/domain/recommend/service/recommendPromptService";
 import { RecommendRawRes } from "@/domain/recommend/type/recommendRawRes";
+import axios from "axios";
 
 const {
   OPENAI_REVERSE_PROXY,
@@ -70,6 +69,6 @@ const getHeaderPayload = () => {
   return headers;
 }
 
-export {
+export const ProxyRecommendService = {
   recommend
 };

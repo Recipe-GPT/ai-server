@@ -5,9 +5,6 @@ import express from 'express';
 import asyncify from 'express-asyncify';
 const router = asyncify(express.Router());
 
-router.use(express.json({limit:'1mb'}));
-router.use(express.urlencoded({extended:true,limit:'1mb'}));
-
 router.post('/recommend/mock', (req, res) => {
   /*  #swagger.tags = ['Recommend']
       #swagger.summary = '요리 추천 목업 데이터 API'
@@ -113,5 +110,4 @@ router.post('/recommend/local', (req, res) => {
   throw new NotImplementedException();
 });
 
-const RecommendController = router;
-export default RecommendController;
+export const RecommendController = router;

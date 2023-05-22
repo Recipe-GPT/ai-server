@@ -47,6 +47,22 @@ const doc = {
       $ingredients: [''],
       $seasonings: ['']
     },
+    RecipeRes: {
+      ingredients: ['string'],
+      seasonings: ['string'],
+      recipe: ['string']
+    },
+    RecipeBadRequestRes: {
+      statusCode: 400,
+      message: 'Bad Request',
+      fields: {
+        ingredients: '재료는 3개 이상이여야 합니다'
+      }
+    },
+    RecipeConflictRes: {
+      statusCode: 409,
+      message: '재료로 컴퓨터를 사용할 수 없습니다.'
+    },
     UnAuthorizedRes: {
       statusCode: 401,
       message: 'UnAuthorized'

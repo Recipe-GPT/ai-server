@@ -1,6 +1,6 @@
 import { RecommendReq } from "@/domain/recommend/type/recommendReq";
 import { Prompt } from "@/domain/food/type/prompt";
-import { ERROR_CHECK_SIGN, RECOMMEND_REGEX, ITEM_DELIMITER, ITEM_DELIMITER_PREFIX, ITEM_DELIMITER_SUFFIX } from "@/.prompt.env";
+import { ERROR_CHECK_SIGN, RECOMMEND_REGEX } from "@/.prompt.env";
 import { RecommendRes } from "@/domain/recommend/type/recommendRes";
 import ConflictException from "@/global/error/exceptions/conflictException";
 import { PromptService } from "@/domain/food/service/promptService";
@@ -31,12 +31,8 @@ const parseAiResponse = (text: string): RecommendRes[] => {
     const res: RecommendRes = {
       name: match[1],
       description: match[2],
-      ingredients: match[3].slice(ITEM_DELIMITER_PREFIX.length, -(ITEM_DELIMITER_SUFFIX.length))
-                           .split(ITEM_DELIMITER)
-                           .filter(s => s),
-      seasonings: match[4].slice(ITEM_DELIMITER_SUFFIX.length, -(ITEM_DELIMITER_SUFFIX.length))
-                          .split(ITEM_DELIMITER)
-                          .filter(s => s)
+      ingredients: PromptService.parseItems(match[3]),
+      seasonings: PromptService.parseItems(match[4])
     }
     resList.push(res);
   }

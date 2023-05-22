@@ -45,6 +45,7 @@ const getPayload = (req: RecommendReq) => {
   
   const prompt: Prompt = RecommendPromptService.getUserPrompt(req);
   const prompts: Prompt[] = RECOMMEND_PROMPT.concat(prompt);
+  console.log(prompt)
   
   return {
     model: OPENAI_MODEL_TYPE,

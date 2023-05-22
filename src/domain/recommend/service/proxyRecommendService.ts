@@ -3,7 +3,7 @@ import { Prompt } from "@/domain/food/type/prompt";
 import InternalServerException from "@/global/error/exceptions/internalServerException";
 import { FOOD_RECOMMEND_PROMPT } from '@/.prompt.env';
 import { RecommendPromptService } from "@/domain/recommend/service/recommendPromptService";
-import { RecommendRawRes } from "@/domain/recommend/type/recommendRawRes";
+import { OpenAiModelRawRes } from "@/domain/food/type/openAiModelRawRes";
 import axios from "axios";
 
 const {
@@ -19,7 +19,7 @@ const {
   OPENAI_MODEL_frequency_penalty
 } = process.env;
 
-const recommend = async (req: RecommendReq): Promise<RecommendRawRes> => {
+const recommend = async (req: RecommendReq): Promise<OpenAiModelRawRes> => {
   if (!OPENAI_REVERSE_PROXY || !OPENAI_REVERSE_PROXY_PATH) {
     console.log(OPENAI_REVERSE_PROXY, OPENAI_REVERSE_PROXY_PATH)
     throw new InternalServerException('서버에 문제가 발생하였습니다. 리버스 프록시 설정을 확인해주세요.');
@@ -30,7 +30,7 @@ const recommend = async (req: RecommendReq): Promise<RecommendRawRes> => {
     headers: getHeaderPayload()
   };
   
-  const res = await axios.post<RecommendRawRes>(
+  const res = await axios.post<OpenAiModelRawRes>(
     OPENAI_REVERSE_PROXY + OPENAI_REVERSE_PROXY_PATH,
     payload,
     config
@@ -38,7 +38,7 @@ const recommend = async (req: RecommendReq): Promise<RecommendRawRes> => {
   return res.data;
 };
   
-  const getPayload = (req: RecommendReq) => {
+const getPayload = (req: RecommendReq) => {
   if (!FOOD_RECOMMEND_PROMPT) {
     throw new InternalServerException('서버에 문제가 발생하였습니다. 프롬프트 설정을 확인해주세요.');
   }

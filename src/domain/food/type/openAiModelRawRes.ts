@@ -1,6 +1,6 @@
 import { Prompt } from "@/domain/food/type/prompt";
 
-export interface RecommendRawRes {
+export interface OpenAiModelRawRes {
   choices: [
     {message: Prompt}
   ]

@@ -6,7 +6,7 @@ import { RecommendRes } from "@/domain/recommend/type/recommendRes";
 
 const recommendByProxy = async (req: RecommendReq): Promise<RecommendRes[]> => {
   const res = await ProxyRecommendService.recommend(req);
-  console.log(res)
+  console.log(res);
   const text = res.choices[0].message.content;
   console.log(text);
   return RecommendPromptService.parseAiResponse(text);

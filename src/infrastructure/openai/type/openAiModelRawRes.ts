@@ -1,4 +1,4 @@
-import { Prompt } from "@/domain/food/type/prompt";
+import { Prompt } from "@/infrastructure/prompt/type/prompt";
 
 export interface OpenAiModelRawRes {
   choices: [

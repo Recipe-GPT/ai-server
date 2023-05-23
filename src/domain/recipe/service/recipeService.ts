@@ -6,9 +6,7 @@ import { RecipeRes } from "@/domain/recipe/type/recipeRes";
 
 const generateRecipeByProxy = async (req: RecipeReq): Promise<RecipeRes> => {
   const res = await ProxyRecipeService.generateRecipe(req);
-  console.log(res);
   const text = res.choices[0].message.content;
-  console.log(text);
   return RecipePromptService.parseAiResponse(text);
 };
 

@@ -5,7 +5,7 @@ import { RecommendRes } from "@/domain/recommend/type/recommendRes";
 import ConflictException from "@/global/error/exceptions/conflictException";
 import { PromptService } from "@/domain/food/service/promptService";
 
-const getUserPrompt = (req: RecommendReq) => {
+const getUserPrompt = (req: RecommendReq): Prompt => {
   const prompt: Prompt = {
     role: 'user',
     content: `${PromptService.getIngredientsPrompt(req.ingredients)}

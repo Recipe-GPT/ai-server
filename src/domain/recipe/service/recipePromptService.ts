@@ -5,7 +5,7 @@ import { RecipeRes } from "@/domain/recipe/type/recipeRes";
 import { ERROR_CHECK_SIGN, RECIPE_REGEX } from "@/.prompt.env";
 import ConflictException from "@/global/error/exceptions/conflictException";
 
-const getUserPrompt = (req: RecipeReq) => {
+const getUserPrompt = (req: RecipeReq): Prompt => {
   const prompt: Prompt = {
     role: 'user',
     content: `${PromptService.getNamePrompt(req.name)}

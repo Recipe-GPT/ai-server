@@ -1,3 +1,18 @@
+const POLICY_PROMPT = [
+{
+"role": "system",
+"content": ""
+},
+{
+"role": "assistant",
+"content": ""
+},
+{
+"role": "user",
+"content": ""
+}
+];
+
 const RECOMMEND_PROMPT = [
 {
 "role": "system",
@@ -47,6 +62,7 @@ const INGREDIENTS = 'ingredients';
 const SEASONINGS = 'seasonings';
 
 export {
+  POLICY_PROMPT,
   RECOMMEND_PROMPT,
   RECOMMEND_MOCK_RESPONSE,
   RECIPE_PROMPT,

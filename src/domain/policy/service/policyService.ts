@@ -5,7 +5,7 @@ import { PromptService } from '@/infrastructure/prompt/promptService';
 import ConflictException from '@/global/error/exceptions/conflictException';
 import { OpenAiProxyService } from '@/infrastructure/openai/openAiProxyService';
 
-const contentPolicyCheck = async (...inputs: string[]) => {
+const contentPolicyCheck = async (...inputs: string[]): Promise<void> => {
   if (!POLICY_PROMPT) {
     throw new InternalServerException('서버에 문제가 발생하였습니다. 프롬프트 설정을 확인해주세요.');
   }

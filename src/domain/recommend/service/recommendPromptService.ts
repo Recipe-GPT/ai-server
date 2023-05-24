@@ -1,6 +1,6 @@
 import { RecommendReq } from "@/domain/recommend/type/recommendReq";
 import { Prompt } from "@/infrastructure/prompt/type/prompt";
-import { ERROR_CHECK_SIGN, RECOMMEND_REGEX } from "@/.prompt.env";
+import { RECOMMEND_REGEX } from "@/.prompt.env";
 import { RecommendRes } from "@/domain/recommend/type/recommendRes";
 import ConflictException from "@/global/error/exceptions/conflictException";
 import { PromptService } from "@/infrastructure/prompt/promptService";
@@ -8,10 +8,11 @@ import { PromptService } from "@/infrastructure/prompt/promptService";
 const getUserPrompt = (req: RecommendReq): Prompt => {
   const prompt: Prompt = {
     role: 'user',
-    content: `${PromptService.encodeIngredients(req.ingredients)}
-${PromptService.encodeSeasonings(req.seasonings)}`
+    content: [
+      PromptService.encodeIngredients(req.ingredients),
+      PromptService.encodeSeasonings(req.seasonings)
+    ].join('\n')
   };
-
   return prompt;
 };
 

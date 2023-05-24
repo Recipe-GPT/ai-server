@@ -2,18 +2,19 @@ import { Prompt } from "@/infrastructure/prompt/type/prompt";
 import { PromptService } from "@/infrastructure/prompt/promptService";
 import { RecipeReq } from "@/domain/recipe/type/recipeReq";
 import { RecipeRes } from "@/domain/recipe/type/recipeRes";
-import { ERROR_CHECK_SIGN, RECIPE_REGEX } from "@/.prompt.env";
+import { RECIPE_REGEX } from "@/.prompt.env";
 import ConflictException from "@/global/error/exceptions/conflictException";
 
 const getUserPrompt = (req: RecipeReq): Prompt => {
   const prompt: Prompt = {
     role: 'user',
-    content: `${PromptService.encodeName(req.name)}
-${PromptService.encodeDescription(req.description)}
-${PromptService.encodeIngredients(req.ingredients)}
-${PromptService.encodeSeasonings(req.seasonings)}`
+    content: [
+      PromptService.encodeName(req.name),
+      PromptService.encodeDescription(req.description),
+      PromptService.encodeIngredients(req.ingredients),
+      PromptService.encodeSeasonings(req.seasonings)
+    ].join('\n')
   };
-
   return prompt;
 };
 

@@ -8,8 +8,8 @@ import { PromptService } from "@/infrastructure/prompt/promptService";
 const getUserPrompt = (req: RecommendReq): Prompt => {
   const prompt: Prompt = {
     role: 'user',
-    content: `${PromptService.getIngredientsPrompt(req.ingredients)}
-${PromptService.getSeasoningsPrompt(req.seasonings)}`
+    content: `${PromptService.encodeIngredients(req.ingredients)}
+${PromptService.encodeSeasonings(req.seasonings)}`
   };
 
   return prompt;
@@ -17,8 +17,9 @@ ${PromptService.getSeasoningsPrompt(req.seasonings)}`
 
 const parseAiResponse = (text: string): RecommendRes[] => {
   if (PromptService.isError(text)) {
-    const errorMessage = text.split(ERROR_CHECK_SIGN)[1].trim();
-    throw new ConflictException(errorMessage);
+    throw new ConflictException(
+      PromptService.parseErrorMessage(text)
+    );
   }
   
   // AI의 답변 구조가 약간 다를 수 있기 때문에 답변을 보정해줌.

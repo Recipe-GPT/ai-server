@@ -2,8 +2,6 @@ import { ERROR_CHECK_SIGN, POLICY_PROMPT } from '@/.prompt.env';
 import InternalServerException from '@/global/error/exceptions/internalServerException';
 import { Prompt } from '@/infrastructure/prompt/type/prompt';
 import { PromptService } from '@/infrastructure/prompt/promptService';
-import { OpenAiModelRawRes } from '@/infrastructure/openai/type/openAiModelRawRes';
-import axios from 'axios';
 import ConflictException from '@/global/error/exceptions/conflictException';
 import { OpenAiProxyService } from '@/infrastructure/openai/openAiProxyService';
 

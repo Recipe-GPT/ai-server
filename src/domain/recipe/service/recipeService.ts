@@ -10,8 +10,9 @@ const generateRecipeByProxy = async (req: RecipeReq): Promise<RecipeRes> => {
   if (!RECIPE_PROMPT) {
     throw new InternalServerException('서버에 문제가 발생하였습니다. 프롬프트 설정을 확인해주세요.');
   }
-  const prompt: Prompt = RecipePromptService.getUserPrompt(req);
-  const prompts: Prompt[] = RECIPE_PROMPT.concat(prompt);
+  const prompts: Prompt[] = RECIPE_PROMPT.concat(
+    RecipePromptService.getUserPrompt(req)
+  );
   
   const text = await OpenAiProxyService.generate(prompts);
   return RecipePromptService.parseAiResponse(text);

@@ -10,8 +10,9 @@ const recommendByProxy = async (req: RecommendReq): Promise<RecommendRes[]> => {
   if (!RECOMMEND_PROMPT) {
     throw new InternalServerException('서버에 문제가 발생하였습니다. 프롬프트 설정을 확인해주세요.');
   }
-  const prompt: Prompt = RecommendPromptService.getUserPrompt(req);
-  const prompts: Prompt[] = RECOMMEND_PROMPT.concat(prompt);
+  const prompts: Prompt[] = RECOMMEND_PROMPT.concat(
+    RecommendPromptService.getUserPrompt(req)
+  );
   
   const text = await OpenAiProxyService.generate(prompts);
   return RecommendPromptService.parseAiResponse(text);

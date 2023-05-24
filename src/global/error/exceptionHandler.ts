@@ -1,28 +1,21 @@
 import InternalServerException from '@/global/error/exceptions/internalServerException';
 import NotFoundException from '@/global/error/exceptions/notFoundException';
 import GeneralException from '@/global/error/generalException';
-import { Request, Response, NextFunction } from 'express';
+import { ErrorRequestHandler, RequestHandler } from 'express';
 
-const exceptionHandler = (
-  err: GeneralException | Error,
-  req: Request,
-  res: Response,
-  next: NextFunction): void => {
+const exceptionHandler: ErrorRequestHandler = (err: GeneralException | Error, req, res, next): void => {
   if (err instanceof GeneralException) {
     if (err.statusCode === 500) {
       console.error(err);
     }
-    res.status(err.statusCode).json(err).end();
+    res.status(err.statusCode).json(err);
     return;
   }
   console.error(err);
   res.status(500).json(new InternalServerException());
 };
 
-const pathExceptionHandler = (
-  req: Request,
-  res: Response,
-  next: NextFunction): void => {
+const pathExceptionHandler: RequestHandler = (req, res, next): void => {
   res.status(404).json(new NotFoundException());
 };
 

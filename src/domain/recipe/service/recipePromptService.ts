@@ -8,10 +8,10 @@ import ConflictException from "@/global/error/exceptions/conflictException";
 const getUserPrompt = (req: RecipeReq): Prompt => {
   const prompt: Prompt = {
     role: 'user',
-    content: `${PromptService.getNamePrompt(req.name)}
-${PromptService.getDescriptionPrompt(req.description)}
-${PromptService.getIngredientsPrompt(req.ingredients)}
-${PromptService.getSeasoningsPrompt(req.seasonings)}`
+    content: `${PromptService.encodeName(req.name)}
+${PromptService.encodeDescription(req.description)}
+${PromptService.encodeIngredients(req.ingredients)}
+${PromptService.encodeSeasonings(req.seasonings)}`
   };
 
   return prompt;
@@ -19,8 +19,9 @@ ${PromptService.getSeasoningsPrompt(req.seasonings)}`
 
 const parseAiResponse = (text: string): RecipeRes => {
   if (PromptService.isError(text)) {
-    const errorMessage = text.split(ERROR_CHECK_SIGN)[1].trim();
-    throw new ConflictException(errorMessage);
+    throw new ConflictException(
+      PromptService.parseErrorMessage(text)
+    );
   }
   
   // AI의 답변 구조가 약간 다를 수 있기 때문에 답변을 보정해줌.

@@ -1,3 +1,4 @@
+import BadGatewayException from "@/global/error/exceptions/badGatewayException";
 import InternalServerException from "@/global/error/exceptions/internalServerException";
 import { OpenAiModelRawRes } from "@/infrastructure/openai/type/openAiModelRawRes";
 import { Prompt } from "@/infrastructure/prompt/type/prompt";
@@ -27,12 +28,21 @@ const generate = async (prompts: Prompt[]): Promise<string> => {
     headers: getHeaderPayload()
   };
   
-  const res = await axios.post<OpenAiModelRawRes>(
-    OPENAI_REVERSE_PROXY + OPENAI_REVERSE_PROXY_PATH,
-    payload,
-    config
-  );
-  return res.data.choices[0].message.content;
+  let message: Prompt | undefined;
+  try {
+    const res = await axios.post<OpenAiModelRawRes>(
+      OPENAI_REVERSE_PROXY + OPENAI_REVERSE_PROXY_PATH,
+      payload,
+      config
+    );
+    message = res.data.choices[0].message;
+  } catch (error) {
+    throw new BadGatewayException('OpenAI 프록시 서버에 문제가 발생하였습니다.');
+  }
+  if (!message) {
+    throw new BadGatewayException('OpenAI 프록시 서버에 문제가 발생하였습니다.');
+  }
+  return message.content;
 }
 
 const getPayload = (prompts: Prompt[]) => ({

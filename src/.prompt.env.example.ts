@@ -1,4 +1,6 @@
-const POLICY_PROMPT = [
+import { Prompt } from "@/infrastructure/prompt/type/prompt";
+
+const POLICY_PROMPT: Prompt[] = [
 {
 "role": "system",
 "content": ""
@@ -13,7 +15,7 @@ const POLICY_PROMPT = [
 }
 ];
 
-const RECOMMEND_PROMPT = [
+const RECOMMEND_PROMPT: Prompt[] = [
 {
 "role": "system",
 "content": ""
@@ -30,7 +32,7 @@ const RECOMMEND_PROMPT = [
 
 const RECOMMEND_MOCK_RESPONSE = '';
 
-const RECIPE_PROMPT = [
+const RECIPE_PROMPT: Prompt[] = [
 {
 "role": "system",
 "content": ""

@@ -20,6 +20,7 @@ const generate = async (prompts: Prompt[]): Promise<string> => {
   
   const payload = getPayload(prompts);
   const res = await openAi.createChatCompletion(payload);
+  console.log(res.data)
   const message = res.data.choices[0].message;
   if (!message) {
     throw new BadGatewayException('OpenAI 서버에 문제가 발생하였습니다.');
@@ -42,6 +43,6 @@ const getPayload = (prompts: Prompt[]): CreateChatCompletionRequest => {
   }
 };
 
-export const OpenAiProxyService = {
+export const OpenAiApiService = {
   generate
 };

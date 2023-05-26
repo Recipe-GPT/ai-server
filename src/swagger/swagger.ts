@@ -63,6 +63,10 @@ const doc = {
       statusCode: 409,
       message: '재료로 컴퓨터를 사용할 수 없습니다.'
     },
+    OpenAiBadGatewayRes: {
+      statusCode: 502,
+      message: 'OpenAI 서버에 문제가 발생하였습니다.'
+    },
     UnAuthorizedRes: {
       statusCode: 401,
       message: 'UnAuthorized'

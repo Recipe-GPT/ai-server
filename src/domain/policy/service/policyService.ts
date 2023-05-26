@@ -3,7 +3,7 @@ import InternalServerException from '@/global/error/exceptions/internalServerExc
 import { Prompt } from '@/infrastructure/prompt/type/prompt';
 import { PromptService } from '@/infrastructure/prompt/promptService';
 import ConflictException from '@/global/error/exceptions/conflictException';
-import { OpenAiProxyService } from '@/infrastructure/openai/openAiProxyService';
+import { OpenAiApiService } from '@/infrastructure/openai/openAiApiService';
 
 const contentPolicyCheck = async (...inputs: string[]): Promise<void> => {
   if (!POLICY_PROMPT) {
@@ -16,7 +16,7 @@ const contentPolicyCheck = async (...inputs: string[]): Promise<void> => {
   }
   const prompts: Prompt[] = POLICY_PROMPT.concat(prompt);
 
-  const text = await OpenAiProxyService.generate(prompts);
+  const text = await OpenAiApiService.generate(prompts);
   if (PromptService.isError(text)) {
     const errorMessage = text.split(ERROR_CHECK_SIGN)[1].trim();
     throw new ConflictException(errorMessage);

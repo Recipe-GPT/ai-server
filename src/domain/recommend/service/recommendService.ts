@@ -7,6 +7,29 @@ import { Prompt } from "@/infrastructure/prompt/type/prompt";
 import { OpenAiProxyService } from "@/infrastructure/openai/openAiProxyService";
 import { PolicyService } from "@/domain/policy/service/policyService";
 import { PromptService } from "@/infrastructure/prompt/promptService";
+import { OpenAiApiService } from "@/infrastructure/openai/openAiApiService";
+
+const recommendByMockData = (): RecommendRes[] => {
+  const text = RECOMMEND_MOCK_RESPONSE;
+  return RecommendPromptService.parseAiResponse(text);
+};
+
+const recommendByOpenAiApi = async (req: RecommendReq): Promise<RecommendRes[]> => {
+  await PolicyService.contentPolicyCheck(
+    PromptService.encodeIngredients(req.ingredients),
+    PromptService.encodeSeasonings(req.seasonings)
+  );
+
+  if (!RECOMMEND_PROMPT) {
+    throw new InternalServerException('서버에 문제가 발생하였습니다. 프롬프트 설정을 확인해주세요.');
+  }
+  const prompts: Prompt[] = RECOMMEND_PROMPT.concat(
+    RecommendPromptService.getUserPrompt(req)
+  );
+  
+  const text = await OpenAiApiService.generate(prompts);
+  return RecommendPromptService.parseAiResponse(text);
+};
 
 const recommendByProxy = async (req: RecommendReq): Promise<RecommendRes[]> => {
   await PolicyService.contentPolicyCheck(
@@ -25,12 +48,8 @@ const recommendByProxy = async (req: RecommendReq): Promise<RecommendRes[]> => {
   return RecommendPromptService.parseAiResponse(text);
 };
 
-const recommendByMockData = (): RecommendRes[] => {
-  const text = RECOMMEND_MOCK_RESPONSE;
-  return RecommendPromptService.parseAiResponse(text);
-};
-
 export const RecommendService = {
+  recommendByMockData,
+  recommendByOpenAiApi,
   recommendByProxy,
-  recommendByMockData
 };

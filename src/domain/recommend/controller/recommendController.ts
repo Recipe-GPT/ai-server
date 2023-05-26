@@ -35,23 +35,44 @@ router.post('/recommend/mock', (req, res) => {
   );
 });
 
-router.post('/recommend/api', (req, res) => {
+router.post('/recommend/api', async (req, res) => {
   /*  #swagger.tags = ['Recommend']
       #swagger.summary = 'API를 통해 요리 추천'
       #swagger.description = 'OpenAI의 GPT API를 통한 요리 메뉴 추천 API' */
   /*  #swagger.security = [{
       "apiKeyAuth": []
   }] */
+  /* #swagger.requestBody = {
+      description: '재료와 조미료, 소스 정보',
+      required: true,
+      schema: { $ref: "#/definitions/RecommendReq" }
+  } */
+  /* #swagger.responses[200] = {
+      schema: { "$ref": "#/definitions/RecommendRes" },
+      description: "성공" } */
+  /* #swagger.responses[400] = {
+      schema: { "$ref": "#/definitions/RecommendBadRequestRes" },
+      description: "요청이 양식에 맞지않음" } */
   /* #swagger.responses[401] = {
       schema: { "$ref": "#/definitions/UnAuthorizedRes" },
       description: "인증 안됨" } */
+  /* #swagger.responses[409] = {
+      schema: { "$ref": "#/definitions/RecommendConflictRes" },
+      description: "사용자의 요청을 토대로 AI가 요리 추천을 하는데 문제가 발생함" } */
   /* #swagger.responses[500] = {
       schema: { "$ref": "#/definitions/InternalServerErrorRes" },
       description: "내부 서버 문제" } */
-  /* #swagger.responses[501] = {
-      schema: { "$ref": "#/definitions/NotImplementedRes" },
-      description: "아직 구현안됨" } */
-  throw new NotImplementedException();
+  /* #swagger.responses[502] = {
+      schema: { "$ref": "#/definitions/OpenAiBadGatewayRes" },
+      description: "OpenAi 서버 문제" } */
+  
+  const payload: RecommendReq = {
+    ingredients: req.body.ingredients,
+    seasonings: req.body.seasonings
+  };
+  res.json(
+    await RecommendService.recommendByOpenAiApi(payload)
+  );
 });
 
 router.post('/recommend/proxy', async (req, res) => {
@@ -81,6 +102,9 @@ router.post('/recommend/proxy', async (req, res) => {
   /* #swagger.responses[500] = {
       schema: { "$ref": "#/definitions/InternalServerErrorRes" },
       description: "내부 서버 문제" } */
+  /* #swagger.responses[502] = {
+      schema: { "$ref": "#/definitions/OpenAiBadGatewayRes" },
+      description: "OpenAi 프록시 서버 문제" } */
   
   const payload: RecommendReq = {
     ingredients: req.body.ingredients,

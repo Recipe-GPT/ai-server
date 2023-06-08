@@ -5,10 +5,11 @@
   "main": "main.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node dist/main.js",
+    "start": "node main.js",
+    "dev": "node dist/main.js",
+    "predev": "npm run build",
     "build": "tsc && babel dist -d dist && npm run swagger",
-    "swagger": "node dist/swagger/swagger.js",
-    "prestart": "npm run build"
+    "swagger": "node dist/swagger/swagger.js"
   },
   "repository": {
     "type": "git",
